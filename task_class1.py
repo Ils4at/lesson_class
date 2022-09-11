@@ -9,15 +9,19 @@ class Critter(object):
         self.hunger = hunger
         self.boredom = boredom
 
+    def __str__(self):
+        eat = str(self.hunger)
+        ful = str(self.boredom)
+        rep = "Уровень голода: " + eat + "уровень уныния: " + ful
+        return rep
+
     def __pass_time(self):
         self.hunger += 1
         self.boredom += 1
 
     @property
     def mood(self):
-        print(self.hunger, self.boredom)
         unhappienss = self.hunger + self.boredom
-        print(unhappienss)
         if unhappienss < 5:
             m = 'прекрасно'
         elif 5 <= unhappienss <= 10:
@@ -32,14 +36,14 @@ class Critter(object):
         print(f'Меня зовут {self.name}, и сейчас я чусвую себя {self.mood}')
         self.__pass_time()
 
-    def eat(self, food=4):
+    def eat(self, food):
         print("Мррр...Спасибо")
         self.hunger -= food
         if self.hunger < 0:
             self.hunger = 0
         self.__pass_time()
 
-    def play(self, fun=4):
+    def play(self, fun):
         print("Уиии!")
         self.boredom -= fun
         if self.boredom < 0:
@@ -60,6 +64,7 @@ def main():
             1 - Узнать о самочуствии
             2 - Покормить зверюшку
             3 - Поиграть со зверюшку
+            4 - Посказка
             """)
         choice = input("Ваш выбор: ")
         print()
@@ -68,9 +73,13 @@ def main():
         elif choice == "1":
             crit.talk()
         elif choice == "2":
-            crit.eat()
+            eat = int(input("Введите сколько корма хотите дать: "))
+            crit.eat(eat)
         elif choice == "3":
-            crit.play()
+            fun = int(input("Введите сколько времени хотит потратить на игру: "))
+            crit.play(fun)
+        elif choice == "4":
+            print(crit)
         else:
             print(f"В меню нету такого выбора {choice}")
 
